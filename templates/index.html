@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task List</title>
+        <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='style.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="no-complete">
+                <h2>未完了：課題一覧</h2>
+                {% if uncompleted_tasks != [] %}
+                <ol>
+                    {% for task in uncompleted_tasks %}
+                    <div class="no-complete-tasks">
+                        <li>{{ task.content }}</li>
+                        <form method="post" action="{{ url_for('complete_task',task_id=task.id) }}">
+                            <button type="submit" class="complete-button">完了</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </ol>
+                {% else %}
+                <p>未完了課題の登録はありません</p>
+                {% endif %}
+                <hr>
+            </div>
+
+            <div class="complete">
+                <h2>完了：課題一覧</h2>
+                {% if completed_tasks != [] %}
+                <ol>
+                    {% for task in completed_tasks %}
+                    <div class="complete-tasks">
+                        <li>{{ task.content }}</li>
+                        <form method="post" action="{{ url_for('uncomplete_task',task_id=task.id) }}">
+                            <button type="submit" class="uncomplete-button">未完了に戻す</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </ol>
+                {% else %}
+                <p>完了課題の登録はありません</p>
+                {% endif %}
+                <hr>
+            </div>
+            <a href="{{ url_for('new_task') }}" class="button">新規課題の登録はこちら</a>
+        </div>
+    </body>
+</html>
