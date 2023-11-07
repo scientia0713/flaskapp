@@ -5,6 +5,6 @@
 class Config(object):
     DEBUG = True
     
-    SQLALCHEMY_TRACK_MODIFICATION = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    SQLALCHEMY_DATABASE_URI = "sqlite:///data.sqlite"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///tasks.sqlite"
