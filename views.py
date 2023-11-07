@@ -36,6 +36,38 @@ def new_task():
     #GETの場合
     return render_template('new_task.html')
 
+#編集
+@app.route('/tasks/<int:task_id>/update',methods=['GET','POST'])
+def update_task(task_id):
+    target_task = Task.query.get(task_id)
+    
+    #POST時
+    if request.method == 'POST':
+        #更新処理
+        target_task.task_title = request.form['task_title']
+        
+        target_task.task_content = request.form['task_content']
+        
+        db.session.commit()
+        
+        #一覧画面にリダイレクト
+        return redirect(url_for('index'))
+    
+    #GET時
+    return render_template('update_task.html',task=target_task)
+
+#削除
+@app.route('/tasks/<int:task_id>/delete')
+def delete_task(task_id):
+    target_task = Task.query.get(task_id)
+    
+    #削除処理
+    db.session.delete(target_task)
+    db.session.commit()
+    
+    #一覧画面にリダイレクト
+    return redirect(url_for('index'))
+
 #完了ボタン押下時
 @app.route('/tasks/<int:task_id>/complete',methods=['POST'])
 def complete_task(task_id):

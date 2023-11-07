@@ -3,6 +3,17 @@
     <head>
         <title>Task List</title>
         <link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='style.css') }}">
+        <script>
+            function delete_confirm(event) {
+                var result = confirm("この課題を削除してよろしいですか？");
+                if (result == false){
+                    event.preventDefault();
+                    alert("課題の削除を中止しました。");
+                } else {
+                    alert("課題を削除しました。");
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="container">
@@ -12,7 +23,9 @@
                 <ol>
                     {% for task in uncompleted_tasks %}
                     <div class="no-complete-tasks">
-                        <li>【{{ task.task_title }}】<br>内容・・・&nbsp;{{ task.task_content }}</li>
+                        <li>【{{ task.task_title }}】&nbsp;<a href="{{ url_for('update_task',task_id=task.id) }}">編集</a>|
+                            <a href="{{ url_for('delete_task',task_id=task.id) }}" onclick="delete_confirm(event)">削除</a>
+                            <br>内容・・・&nbsp;{{ task.task_content }}</li>
                         <form method="post" action="{{ url_for('complete_task',task_id=task.id) }}">
                             <button type="submit" class="complete-button">完了</button>
                         </form>
