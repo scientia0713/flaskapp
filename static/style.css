@@ -43,6 +43,7 @@ label{
     font-size: 14px;
     margin: 20px 0;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 a.button{

@@ -18,13 +18,19 @@ def index():
 def new_task():
     #POSTの場合
     if request.method == 'POST':
+        #新規登録課題のタイトルを取り出す
         task_title = request.form['task_title']
         
-        task = Task(task_title=task_title)
+        #新規登録課題の内容を取り出す
+        task_content = request.form['task_content']
+
+        #登録処理
+        task = Task(task_title=task_title,task_content=task_content)
         
         db.session.add(task)
         db.session.commit()
         
+        #一覧画面にリダイレクト
         return redirect(url_for('index'))
     
     #GETの場合
