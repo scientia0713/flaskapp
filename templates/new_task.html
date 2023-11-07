@@ -8,9 +8,15 @@
         <div class="container">
             <h1>新規課題の登録</h1>
             <form method="post" action="{{ url_for('new_task') }}">
-                <label for="task_title">課題タイトル</label><br>
-                    <input type="text" id="task_title" name="task_title" class="task_title_input"><br>
-                    <input type="submit" value="登録" class="button">
+                <label for="task_title">課題タイトル</label>
+                <br>
+                <input type="text" id="task_title" name="task_title" class="task_title_input">
+                <br>
+                <label for="task_content">課題内容</label>
+                <br>
+                <textarea name="task_content" id="task_content" cols="60" rows="5"></textarea>
+                <br>
+                <input type="submit" value="登録" class="button">
             </form>
             <form method="get" action="{{ url_for('index') }}">
                 <input type="submit" value="課題一覧に戻る" class="return_to_index">
