@@ -18,9 +18,9 @@ def index():
 def new_task():
     #POSTの場合
     if request.method == 'POST':
-        content = request.form['content']
+        task_title = request.form['task_title']
         
-        task = Task(content=content)
+        task = Task(task_title=task_title)
         
         db.session.add(task)
         db.session.commit()

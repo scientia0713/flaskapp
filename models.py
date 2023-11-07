@@ -9,9 +9,9 @@ class Task(db.Model):
 
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     
-    content = db.Column(db.String(400),nullable=False)
+    task_title = db.Column(db.String(400),nullable=False)
     
     is_completed = db.Column(db.Boolean,default=False)
     
     def __str__(self):
-        return f'課題ID:{self.id} 内容:{self.content} 完了フラグ:{self.is_completed}'
+        return f'課題ID:{self.id} タイトル:{self.task_title} 完了フラグ:{self.is_completed}'

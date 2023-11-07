@@ -8,8 +8,8 @@
         <div class="container">
             <h1>新規課題の登録</h1>
             <form method="post" action="{{ url_for('new_task') }}">
-                <label for="content">課題タイトル</label><br>
-                    <input type="text" id="content" name="content" class="text-input"><br>
+                <label for="task_title">課題タイトル</label><br>
+                    <input type="text" id="task_title" name="task_title" class="task_title_input"><br>
                     <input type="submit" value="登録" class="button">
             </form>
             <form method="get" action="{{ url_for('index') }}">
