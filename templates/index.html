@@ -56,6 +56,11 @@
                 {% endif %}
                 <hr>
             </div>
+            {% for message in get_flashed_messages() %}
+                <div style="color: blue;">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <a href="{{ url_for('new_task') }}" class="button">新規課題の登録はこちら</a>
         </div>
     </body>

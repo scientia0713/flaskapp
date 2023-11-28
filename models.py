@@ -16,4 +16,4 @@ class Task(db.Model):
     is_completed = db.Column(db.Boolean,default=False)
     
     def __str__(self):
-        return f'課題ID:{self.id} タイトル:{self.task_title} 完了フラグ:{self.is_completed}'
+        return f'課題ID:{self.id} タイトル:{self.task_title} 課題内容：{self.task_content} 完了フラグ:{self.is_completed}'
