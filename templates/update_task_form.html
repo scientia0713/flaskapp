@@ -1,3 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>課題を編集</h1>
+    {% from "_formhelpers.html" import render_field %}
+        <form method="post" action="{{ url_for('update_task',task_id=task.id) }}" novalidate>
+            {{ form.hidden_tag() }}
+            {{ render_field(form.task_title) }}
+            {{ render_field(form.task_content,rows=5,cols=60) }}
+            {{ form.update }}
+        </form>
+    <form method="get" action="{{ url_for('index') }}">
+        <input type="submit" value="課題一覧に戻る" class="return_to_index">
+    </form>
+</div>
+{%% endblock }
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,3 +37,5 @@
                 <input type="submit" value="課題一覧に戻る" class="return_to_index">
             </form>
         </div>
+    </body>
+</html>

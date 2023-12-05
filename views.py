@@ -1,10 +1,79 @@
 from flask import render_template,request,redirect,url_for,flash
 from app import app
-from models import db, Task
-from forms import TaskForm
+from models import db, Task,User
+from forms import TaskForm,LoginForm,SignUpForm
+from flask_login import login_user,logout_user
 
+#ログイン
+@app.route('/',methods=['GET','POST'])
+def login():
+    
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        
+        #入力されたユーザー情報を取り出す
+        username = form.username.data
+        password = form.password.data
+        
+        #ユーザーテーブルからユーザー情報を抽出
+        user = User.query.filter_by(username=username).first()
+        
+        #認証判定
+        if user is not None and user.check_password(password):
+            
+            #成功　ログイン状態にする
+            login_user(user)
+            
+            #一覧画面に遷移
+            return redirect(url_for('index'))
+        
+        #認証失敗
+        flash('ユーザー名もしくはパスワードが違います。')
+    
+    #GET時
+    return render_template('login_form.html',form=form)
+
+#ログアウト
+@app.route('/logout')
+def logout():
+    
+    logout_user()
+    
+    flash('ログアウトしました。')
+    
+    #ログイン画面に遷移
+    return redirect(url_for('login'))
+
+#サインアップ
+@app.route('/register',methods=['GET','POST'])
+def register():
+    
+    form = SignUpForm()
+    
+    if form.validate_on_submit():
+        
+        #登録したいユーザー情報を取り出す
+        username = form.username.data
+        password = form.password.data
+        
+        #DB登録情報生成
+        user = User(username=username)
+        user.set_password(password)
+        
+        #DB登録
+        db.session.add(user)
+        db.session.commit()
+        
+        flash('ユーザー情報を1件登録しました。')
+        
+        return redirect(url_for('login'))
+    
+    #GET時
+    return render_template('register_form.html',form=form)
+    
 #一覧
-@app.route('/')
+@app.route('/tasks/')
 def index():
     #未完了課題一覧
     uncompleted_tasks = Task.query.filter_by(is_completed=False).all()
@@ -16,7 +85,7 @@ def index():
     return render_template('index.html',uncompleted_tasks=uncompleted_tasks,completed_tasks=completed_tasks)
 
 #登録
-@app.route('/new',methods=['GET','POST'])
+@app.route('/tasks/new',methods=['GET','POST'])
 def new_task():
     #POSTの場合
     form = TaskForm()

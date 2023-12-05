@@ -1,3 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="no-complete">
+        <h2>未完了：課題一覧</h2>
+        {% if uncompleted_tasks != [] %}
+        <ol>
+            {% for task in uncompleted_tasks %}
+            <div class="no-complete-tasks">
+                <li>【{{ task.task_title }}】&nbsp;<a href="{{ url_for('update_task',task_id=task.id) }}">編集</a>|
+                    <a href="{{ url_for('delete_task',task_id=task.id) }}" onclick="delete_confirm(event)">削除</a>
+                    <br>内容・・・&nbsp;{{ task.task_content }}</li>
+                <form method="post" action="{{ url_for('complete_task',task_id=task.id) }}">
+                    <button type="submit" class="complete-button">完了</button>
+                </form>
+            </div>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p>未完了課題の登録はありません</p>
+        {% endif %}
+        <hr>
+    </div>
+
+    <div class="complete">
+        <h2>完了：課題一覧</h2>
+        {% if completed_tasks != [] %}
+        <ol>
+            {% for task in completed_tasks %}
+            <div class="complete-tasks">
+                <li>【{{ task.task_title }}】<br>内容・・・&nbsp;{{ task.task_content }}</li>
+                <form method="post" action="{{ url_for('uncomplete_task',task_id=task.id) }}">
+                    <button type="submit" class="uncomplete-button">未完了に戻す</button>
+                </form>
+            </div>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p>完了課題の登録はありません</p>
+        {% endif %}
+        <hr>
+    </div>
+    {% for message in get_flashed_messages() %}
+        <div style="color: blue;">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('new_task') }}" class="button">新規課題の登録はこちら</a>
+</div>
+{% endblock %}
+
+<!--
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,3 +118,4 @@
         </div>
     </body>
 </html>
+-->
