@@ -8,10 +8,10 @@
         <ol>
             {% for task in uncompleted_tasks %}
             <div class="no-complete-tasks">
-                <li>【{{ task.task_title }}】&nbsp;<a href="{{ url_for('update_task',task_id=task.id) }}">編集</a>|
-                    <a href="{{ url_for('delete_task',task_id=task.id) }}" onclick="delete_confirm(event)">削除</a>
+                <li>【{{ task.task_title }}】&nbsp;<a href="{{ url_for('task.update_task',task_id=task.id) }}">編集</a>|
+                    <a href="{{ url_for('task.delete_task',task_id=task.id) }}" onclick="delete_confirm(event)">削除</a>
                     <br>内容・・・&nbsp;{{ task.task_content }}</li>
-                <form method="post" action="{{ url_for('complete_task',task_id=task.id) }}">
+                <form method="post" action="{{ url_for('task.complete_task',task_id=task.id) }}">
                     <button type="submit" class="complete-button">完了</button>
                 </form>
             </div>
@@ -30,7 +30,7 @@
             {% for task in completed_tasks %}
             <div class="complete-tasks">
                 <li>【{{ task.task_title }}】<br>内容・・・&nbsp;{{ task.task_content }}</li>
-                <form method="post" action="{{ url_for('uncomplete_task',task_id=task.id) }}">
+                <form method="post" action="{{ url_for('task.uncomplete_task',task_id=task.id) }}">
                     <button type="submit" class="uncomplete-button">未完了に戻す</button>
                 </form>
             </div>
@@ -46,7 +46,7 @@
             {{ message }}
         </div>
     {% endfor %}
-    <a href="{{ url_for('new_task') }}" class="button">新規課題の登録はこちら</a>
+    <a href="{{ url_for('task.new_task') }}" class="button">新規課題の登録はこちら</a>
 </div>
 {% endblock %}
 
