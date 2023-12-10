@@ -2,7 +2,7 @@ from flask import render_template,request,redirect,url_for,flash
 from app import app
 from models import db, Task,User
 from forms import TaskForm,LoginForm,SignUpForm
-from flask_login import login_user,logout_user
+from flask_login import login_user,logout_user,login_required
 
 #ログイン
 @app.route('/',methods=['GET','POST'])
@@ -36,6 +36,7 @@ def login():
 
 #ログアウト
 @app.route('/logout')
+@login_required
 def logout():
     
     logout_user()
@@ -47,6 +48,7 @@ def logout():
 
 #サインアップ
 @app.route('/register',methods=['GET','POST'])
+@login_required
 def register():
     
     form = SignUpForm()
@@ -74,6 +76,7 @@ def register():
     
 #一覧
 @app.route('/tasks/')
+@login_required
 def index():
     #未完了課題一覧
     uncompleted_tasks = Task.query.filter_by(is_completed=False).all()
@@ -86,6 +89,7 @@ def index():
 
 #登録
 @app.route('/tasks/new',methods=['GET','POST'])
+@login_required
 def new_task():
     #POSTの場合
     form = TaskForm()
@@ -115,6 +119,7 @@ def new_task():
 
 #編集
 @app.route('/tasks/<int:task_id>/update',methods=['GET','POST'])
+@login_required
 def update_task(task_id):
     target_task = Task.query.get(task_id)
     
@@ -141,6 +146,7 @@ def update_task(task_id):
 
 #削除
 @app.route('/tasks/<int:task_id>/delete')
+@login_required
 def delete_task(task_id):
     target_task = Task.query.get(task_id)
     
@@ -155,6 +161,7 @@ def delete_task(task_id):
 
 #完了ボタン押下時
 @app.route('/tasks/<int:task_id>/complete',methods=['POST'])
+@login_required
 def complete_task(task_id):
     task = Task.query.get(task_id)
     task.is_completed = True
@@ -163,6 +170,7 @@ def complete_task(task_id):
 
 #未完了ボタン押下時
 @app.route('/tasks/<int:task_id>/uncomplete',methods=['POST'])
+@login_required
 def uncomplete_task(task_id):
     task = Task.query.get(task_id)
     task.is_completed = False
