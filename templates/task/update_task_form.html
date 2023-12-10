@@ -2,40 +2,40 @@
 
 {% block content %}
 <div class="container">
-    <h1>新規課題の登録</h1>
+    <h1>課題を編集</h1>
     {% from "_formhelpers.html" import render_field %}
-        <form method="post" action="{{ url_for('new_task') }}" novalidate>
+        <form method="post" action="{{ url_for('task.update_task',task_id=task.id) }}" novalidate>
             {{ form.hidden_tag() }}
             {{ render_field(form.task_title) }}
             {{ render_field(form.task_content,rows=5,cols=60) }}
-            {{ form.submit }}
+            {{ form.update }}
         </form>
-        <form method="get" action="{{ url_for('index') }}">
-            <input type="submit" value="課題一覧に戻る" class="return_to_index">
-        </form>
+    <form method="get" action="{{ url_for('task.index') }}">
+        <input type="submit" value="課題一覧に戻る" class="return_to_index">
+    </form>
 </div>
-{%% endblock }
+{% endblock %}
 
 <!--
 <!DOCTYPE html>
 <html>
     <head>
-        <title>New Task</title>
+        <title>Update Task</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
     </head>
     <body>
         <div class="container">
-            <h1>新規課題の登録</h1>
+            <h1>課題を編集</h1>
             {% from "_formhelpers.html" import render_field %}
-                <form method="post" action="{{ url_for('new_task') }}" novalidate>
+                <form method="post" action="{{ url_for('task.update_task',task_id=task.id) }}" novalidate>
                     {{ form.hidden_tag() }}
                     {{ render_field(form.task_title) }}
                     {{ render_field(form.task_content,rows=5,cols=60) }}
-                    {{ form.submit }}
+                    {{ form.update }}
                 </form>
-                <form method="get" action="{{ url_for('index') }}">
-                    <input type="submit" value="課題一覧に戻る" class="return_to_index">
-                </form>
+            <form method="get" action="{{ url_for('task.index') }}">
+                <input type="submit" value="課題一覧に戻る" class="return_to_index">
+            </form>
         </div>
     </body>
 </html>
